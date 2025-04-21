@@ -6,7 +6,6 @@ class Monster extends Phaser.Scene {
         //Create constants for the monster location
         this.bodyX = 375;
         this.bodyY = 325;
-        
     }
 
     // Use preload to load art and sound assets before the scene starts running.
@@ -56,13 +55,32 @@ class Monster extends Phaser.Scene {
         my.sprite.leftHorn.angle = 18;
         my.sprite.rightHorn = this.add.sprite(this.bodyX+40, this.bodyY-115, "monsterParts", "detail_dark_horn_large.png");
         my.sprite.rightHorn.angle = -18;
-        my.sprite.mouthFang.visible = false;        
+        my.sprite.mouthFang.visible = false;
+        let Skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        Skey.on('down', (key, event) => {
+            my.sprite.mouthFang.visible = false;
+            my.sprite.mouthSmile.visible = true;
+        });
+        let Fkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+        Fkey.on('down', (key, event) => {
+            my.sprite.mouthSmile.visible = false;
+            my.sprite.mouthFang.visible = true;
+        });
+        this.Akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.Dkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     }
 
     update() {
         let my = this.my;    // create an alias to this.my for readability
-
-       
+        if(this.Akey.isDown){
+            for (let piece in my.sprite){
+                my.sprite[piece].x -= 1;
+            }
+        }
+        if(this.Dkey.isDown){
+            for (let piece in my.sprite){
+                my.sprite[piece].x += 1;
+            }
+        }
     }
-
 }
